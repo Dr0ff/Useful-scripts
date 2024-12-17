@@ -1,5 +1,6 @@
 #!/bin/bash
 
+echo "We are about to setup few things here /n Optimisation mode for your service /n and automatically changing ports if you are about to run it as second service
 # Запрос директории у пользователя
 read -p "Enter the CONFIG_DIR (e.g., .juno or .xpla): " CONFIG_DIR
 
