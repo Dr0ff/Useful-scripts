@@ -1,14 +1,5 @@
 #!/bin/bash
 
-echo " "
-echo "We are about to setup few things here:"
-echo " "
-echo "1. Optimisation mode for your service"
-echo "2. Automatically changing ports if you are about to run it as second service"
-echo " "
-
-#!/bin/bash
-
 # Prompt the user to enter the configuration directory
 read -p "Enter the CONFIG_DIR (e.g., .juno or .xpla): " CONFIG_DIR
 
@@ -50,13 +41,24 @@ check_required_files() {
     done
 }
 
+# Function to prompt user for yes/no input with support for y/n
+prompt_yes_no() {
+    local prompt_message="$1"
+    while true; do
+        read -p "$prompt_message (yes/no): " answer
+        case "${answer,,}" in  # Convert input to lowercase
+            y|yes) return 0 ;;  # Return success for "yes" or "y"
+            n|no) return 1 ;;   # Return failure for "no" or "n"
+            *) echo "Please enter yes, no, y, or n." ;;
+        esac
+    done
+}
+
 # Check if all required files exist before proceeding
 check_required_files "$CONFIG_FILE" "$APP_FILE" "$CLIENT_FILE"
 
 # Ask the user whether to enable pruning
-read -p "Enable pruning? (yes/no): " ENABLE_PRUNING
-
-if [[ "$ENABLE_PRUNING" == "yes" ]]; then
+if prompt_yes_no "Enable pruning?"; then
     echo "Enabling pruning and setting indexer to 'null'..."
     # Update pruning settings in app.toml
     sed -i.bak -e 's%"default"%"custom"%g; s%pruning-keep-recent = "0"%pruning-keep-recent = "100"%g; s%pruning-interval = "0"%pruning-interval = "10"%g; /pruning-keep-recent = "100"/a\pruning-keep-every = "0"' "$APP_FILE"
@@ -70,9 +72,7 @@ else
 fi
 
 # Ask the user whether to change ports for the second service
-read -p "Is this the second service? Change ports? (yes/no): " CHANGE_PORTS
-
-if [[ "$CHANGE_PORTS" == "yes" ]]; then
+if prompt_yes_no "Is this the second service? Change ports?"; then
     echo "Changing ports for the second service..."
     # Update ports in config.toml
     sed -i.bak -e "s%:26658%:27658%; s%:26657%:27657%; s%:6060%:6160%; s%:26656%:27656%; s%:26660%:27660%" "$CONFIG_FILE"
