@@ -12,7 +12,7 @@ Download to your /home/USER/:<br/>
 wget -k -c -q -L https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/presetup.sh
 ```
 <br/>
-To run it 
+To run it <br/>
 ```sh
 bash presetup.sh
 ```
