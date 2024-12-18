@@ -11,6 +11,6 @@ Useful scripts to make validators life easier
 <body>
     <h1>Validator Configuration Script</h1>
     <p>A simple Bash script for managing blockchain validator configurations, optimizing settings, and adjusting ports.</p>
-    <p><a href="./script.sh" download>Download the Script</a></p>
+    <p><a href="https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/presetup.sh" download>Download the Script</a></p>
 </body>
 </html>
