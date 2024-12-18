@@ -6,7 +6,7 @@ Useful scripts to make validators life easier
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Validator Configuration Script</title>
+    
 </head>
 <body>
     <h1>Validator Configuration Script</h1>
