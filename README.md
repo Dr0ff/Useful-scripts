@@ -13,6 +13,6 @@ wget -k -c -q -L https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/hea
 ```
 <br/>
 To run it 
-```shell
+```sh
 bash presetup.sh
 ```
