@@ -54,6 +54,14 @@ prompt_yes_no() {
     done
 }
 
+# Function to calculate new ports based on service number and step
+calculate_ports() {
+    local base_port="$1"
+    local step="$2"
+    local service_number="$3"
+    echo $((base_port + step * (service_number - 1)))
+}
+
 # Check if all required files exist before proceeding
 check_required_files "$CONFIG_FILE" "$APP_FILE" "$CLIENT_FILE"
 
@@ -71,19 +79,43 @@ else
     echo "Pruning and indexer configuration will not be changed."
 fi
 
-# Ask the user whether to change ports for the second service
-if prompt_yes_no "Is this the second service? Change ports?"; then
-    echo "Changing ports for the second service..."
+# Ask the user for the service number to determine port adjustments
+if prompt_yes_no "Do you want to configure ports for a specific service (e.g., second, third, etc.)?"; then
+    read -p "Enter the service number (2 for second, 3 for third, etc.): " SERVICE_NUMBER
+    if ! [[ "$SERVICE_NUMBER" =~ ^[2-9][0-9]*$ ]]; then
+        echo "Invalid service number. Must be an integer greater than 1. Exiting."
+        exit 1
+    fi
+
+    PORT_STEP=100  # Define the step for port adjustments
+    echo "Adjusting ports for service number $SERVICE_NUMBER with step $PORT_STEP..."
+
+    # Calculate new ports for each configuration
+    NEW_RPC_PORT=$(calculate_ports 26657 "$PORT_STEP" "$SERVICE_NUMBER")
+    NEW_P2P_PORT=$(calculate_ports 26656 "$PORT_STEP" "$SERVICE_NUMBER")
+    NEW_API_PORT=$(calculate_ports 1317 "$PORT_STEP" "$SERVICE_NUMBER")
+    NEW_GRPC_PORT=$(calculate_ports 9090 "$PORT_STEP" "$SERVICE_NUMBER")
+    NEW_GRPC_WEB_PORT=$(calculate_ports 9091 "$PORT_STEP" "$SERVICE_NUMBER")
+
     # Update ports in config.toml
-    sed -i.bak -e "s%:26658%:27658%; s%:26657%:27657%; s%:6060%:6160%; s%:26656%:27656%; s%:26660%:27660%" "$CONFIG_FILE"
+    sed -i.bak -e "s%:26658%:$(calculate_ports 26658 "$PORT_STEP" "$SERVICE_NUMBER")%; \
+                   s%:26657%:$NEW_RPC_PORT%; \
+                   s%:6060%:$(calculate_ports 6060 "$PORT_STEP" "$SERVICE_NUMBER")%; \
+                   s%:26656%:$NEW_P2P_PORT%; \
+                   s%:26660%:$(calculate_ports 26660 "$PORT_STEP" "$SERVICE_NUMBER")%" "$CONFIG_FILE"
     echo "Ports updated in $CONFIG_FILE."
 
     # Update ports in app.toml
-    sed -i.bak -e "s%:9090%:9190%; s%:9091%:9191%; s%:1317%:1417%; s%:8545%:8645%; s%:8546%:8646%; s%:6065%:6165%" "$APP_FILE"
+    sed -i.bak -e "s%:9090%:$NEW_GRPC_PORT%; \
+                   s%:9091%:$NEW_GRPC_WEB_PORT%; \
+                   s%:1317%:$NEW_API_PORT%; \
+                   s%:8545%:$(calculate_ports 8545 "$PORT_STEP" "$SERVICE_NUMBER")%; \
+                   s%:8546%:$(calculate_ports 8546 "$PORT_STEP" "$SERVICE_NUMBER")%; \
+                   s%:6065%:$(calculate_ports 6065 "$PORT_STEP" "$SERVICE_NUMBER")%" "$APP_FILE"
     echo "Ports updated in $APP_FILE."
 
     # Update ports in client.toml
-    sed -i.bak -e "s%:26657%:27657%" "$CLIENT_FILE"
+    sed -i.bak -e "s%:26657%:$NEW_RPC_PORT%" "$CLIENT_FILE"
     echo "Ports updated in $CLIENT_FILE."
 else
     echo "Ports will not be changed."
