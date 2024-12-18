@@ -25,4 +25,4 @@ Useful scripts to make validators life easier
    https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/presetup.sh download Download presetup.sh or wget -k -c -q -L [https://example.com/file](https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/presetup.sh)</p>
 [presetup.sh](https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/presetup.sh) <br/>
 or<br/>
-[wget -k -c -q -L https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/presetup.sh]
+(wget -k -c -q -L https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/presetup.sh)
