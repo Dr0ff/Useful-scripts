@@ -6,7 +6,7 @@ while true; do
     read PROCESS_PART
 
     # Find all matching processes
-    MATCHING_PROCESSES=$(pgrep -al "^$PROCESS_PART")
+    MATCHING_PROCESSES=$(pgrep -al "^$PROCESS_PART" | awk '{print $2}')
 
     if [[ -z "$MATCHING_PROCESSES" ]]; then
         echo "No processes found matching '$PROCESS_PART'. Please try again."
@@ -14,24 +14,29 @@ while true; do
     fi
 
     echo "Matching processes:"
-    echo "$MATCHING_PROCESSES"
-    echo "Enter the PID of the process you want to monitor or type 'restart' to search again:"
-    read SELECTED_PID
+    # Print the list of matching processes, with numbers
+    PROCESS_LIST=()
+    i=1
+    while IFS= read -r line; do
+        echo "$i. $line"
+        PROCESS_LIST+=("$line")
+        ((i++))
+    done <<< "$MATCHING_PROCESSES"
+    
+    echo "Enter the number corresponding to the process you want to monitor:"
+    read SELECTED_NUMBER
 
-    if [[ "$SELECTED_PID" == "restart" ]]; then
+    # Validate the number input
+    if ! [[ "$SELECTED_NUMBER" =~ ^[0-9]+$ ]] || [ "$SELECTED_NUMBER" -lt 1 ] || [ "$SELECTED_NUMBER" -gt "${#PROCESS_LIST[@]}" ]; then
+        echo "Invalid selection. Please try again."
         continue
     fi
 
-    # Verify that the selected PID corresponds to a process
-    PROCESS_NAME=$(ps -p "$SELECTED_PID" -o comm= 2>/dev/null)
+    # Get the selected process name
+    SELECTED_PROCESS="${PROCESS_LIST[$SELECTED_NUMBER - 1]}"
 
-    if [[ -z "$PROCESS_NAME" ]]; then
-        echo "Invalid PID. Please try again."
-        continue
-    else
-        echo "You selected process '$PROCESS_NAME' with PID $SELECTED_PID. Proceeding with the next steps."
-        break
-    fi
+    echo "You selected process '$SELECTED_PROCESS'. Proceeding with the next steps."
+    break
 done
 
 # Ask for memory limit
@@ -81,27 +86,29 @@ SCRIPT_PATH="$SCRIPT_DIR/memory_check.sh"
 cat <<EOF > "$SCRIPT_PATH"
 #!/bin/bash
 
-# PID to monitor
-MONITORED_PID="$SELECTED_PID"
+# Process name to monitor
+PROCESS_NAME="$SELECTED_PROCESS"
 
 # Memory limit in kilobytes
 MEMORY_LIMIT_MB=$MEMORY_LIMIT_MB
 
 # Check if the process is running
-if ! ps -p "\$MONITORED_PID" > /dev/null 2>&1; then
-    echo -e "\$(date): Process with PID \$MONITORED_PID is not running. Skipping memory check.\n" >> /var/log/memory_check.log
+PROCESS_COUNT=\$(pgrep -c "\$PROCESS_NAME")
+
+if [[ "\$PROCESS_COUNT" -eq 0 ]]; then
+    echo -e "\$(date): Process \$PROCESS_NAME is not running. Skipping memory check.\n" >> /var/log/memory_check.log
     exit 0
 fi
 
 # Get the memory usage of the process (in KB)
-MEMORY_USAGE=\$(ps --no-headers -o rss -p "\$MONITORED_PID" | awk '{sum+=$1} END {print sum}')
+MEMORY_USAGE=\$(ps --no-headers -o rss -p \$(pgrep "\$PROCESS_NAME") | awk '{sum+=$1} END {print sum}')
 
 # Check if the limit is exceeded
 if [[ "\$MEMORY_USAGE" -gt "\$MEMORY_LIMIT_MB" ]]; then
-    echo -e "\$(date): Memory limit \$MEMORY_USAGE KB exceeded for process with PID \$MONITORED_PID. Restarting service...\n" >> /var/log/memory_check.log
+    echo -e "\$(date): Memory limit \$MEMORY_USAGE KB exceeded for \$PROCESS_NAME. Restarting service...\n" >> /var/log/memory_check.log
 
     # Get the service name and restart it
-    SERVICE_NAME=\$(cat /proc/\$MONITORED_PID/cgroup | sed -n 's|.*/\([^.]*\)\.service|\1|p')
+    SERVICE_NAME=\$(cat /proc/\$(pidof "\$PROCESS_NAME")/cgroup | sed -n 's|.*/\([^.]*\)\.service|\1|p')
 
     if systemctl restart "\$SERVICE_NAME"; then
         echo -e "\$(date): Service \$SERVICE_NAME restarted successfully.\n" >> /var/log/memory_check.log
