@@ -95,8 +95,8 @@ if [[ "\$PROCESS_COUNT" -eq 0 ]]; then
 fi
 
 # Get the memory usage of the process (in KB)
-#MEMORY_USAGE=\$(ps --no-headers -o rss -p \$(pgrep "\$PROCESS_NAME") | awk '{sum+=$1} END {print sum}')
-MEMORY_USAGE=$(ps --no-headers -o rss -p $(pgrep "$PROCESS_NAME") | awk '{sum+=$1} END {print sum}')
+MEMORY_USAGE=\$(ps --no-headers -o rss -p \$(pgrep "\$PROCESS_NAME") | awk '{sum+=$1} END {print sum}')
+#MEMORY_USAGE=$(ps --no-headers -o rss -p $(pgrep "$PROCESS_NAME") | awk '{sum+=$1} END {print sum}')
 
 # Check if the limit is exceeded
 if [[ "\$MEMORY_USAGE" -gt "\$MEMORY_LIMIT_MB" ]]; then
