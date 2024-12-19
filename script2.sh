@@ -2,39 +2,36 @@
 
 while true; do
     # Ask for process name
-    echo "Enter the process name to monitor (e.g., starsd):"
-    read PROCESS_NAME
+    echo "Enter the process name to monitor (or a part of it, e.g., starsd):"
+    read PROCESS_PART
 
-    # Check if the process is running
-PROCESS_COUNT=$(pgrep -xc "$PROCESS_NAME")
+    # Find all matching processes
+    MATCHING_PROCESSES=$(pgrep -al "^$PROCESS_PART")
 
-if [[ "$PROCESS_COUNT" -eq 0 ]]; then
-    echo "Error: The process '$PROCESS_NAME' is not running."
-    echo "What would you like to do?"
-    echo "1. Check the process name and enter it again"
-    echo "2. Continue with the entered process name"
-    read -p "Choose an option (1 or 2): " CHOICE
+    if [[ -z "$MATCHING_PROCESSES" ]]; then
+        echo "No processes found matching '$PROCESS_PART'. Please try again."
+        continue
+    fi
 
-    case $CHOICE in
-        1)
-            # Repeat the process name input
-            continue
-            ;;
-        2)
-            # Proceed with the entered name (even though the process is not running)
-            echo "Proceeding with the entered process name '$PROCESS_NAME'."
-            break
-            ;;
-        *)
-            # Invalid choice
-            echo "Invalid choice. Please try again."
-            continue
-            ;;
-    esac
-else
-    echo "The process '$PROCESS_NAME' is running. Proceeding with the next steps."
-    break
-fi
+    echo "Matching processes:"
+    echo "$MATCHING_PROCESSES"
+    echo "Enter the PID of the process you want to monitor or type 'restart' to search again:"
+    read SELECTED_PID
+
+    if [[ "$SELECTED_PID" == "restart" ]]; then
+        continue
+    fi
+
+    # Verify that the selected PID corresponds to a process
+    PROCESS_NAME=$(ps -p "$SELECTED_PID" -o comm= 2>/dev/null)
+
+    if [[ -z "$PROCESS_NAME" ]]; then
+        echo "Invalid PID. Please try again."
+        continue
+    else
+        echo "You selected process '$PROCESS_NAME' with PID $SELECTED_PID. Proceeding with the next steps."
+        break
+    fi
 done
 
 # Ask for memory limit
@@ -84,31 +81,28 @@ SCRIPT_PATH="$SCRIPT_DIR/memory_check.sh"
 cat <<EOF > "$SCRIPT_PATH"
 #!/bin/bash
 
-# Process name to monitor
-PROCESS_NAME="$PROCESS_NAME"
-
-# Get the service name to restart
-SERVICE_NAME=\$(cat /proc/\$(pidof "\$PROCESS_NAME")/cgroup | sed -n 's|.*/\([^.]*\)\.service|\1|p')
+# PID to monitor
+MONITORED_PID="$SELECTED_PID"
 
 # Memory limit in kilobytes
 MEMORY_LIMIT_MB=$MEMORY_LIMIT_MB
 
 # Check if the process is running
-PROCESS_COUNT=\$(pgrep -c "\$PROCESS_NAME")
-
-if [[ "\$PROCESS_COUNT" -eq 0 ]]; then
-    echo -e "\$(date): Process \$PROCESS_NAME is not running. Skipping memory check.\n" >> /var/log/memory_check.log
+if ! ps -p "\$MONITORED_PID" > /dev/null 2>&1; then
+    echo -e "\$(date): Process with PID \$MONITORED_PID is not running. Skipping memory check.\n" >> /var/log/memory_check.log
     exit 0
 fi
 
 # Get the memory usage of the process (in KB)
-MEMORY_USAGE=\$(ps --no-headers -o rss -p \$(pgrep "\$PROCESS_NAME") | awk '{sum+=$1} END {print sum}')
+MEMORY_USAGE=\$(ps --no-headers -o rss -p "\$MONITORED_PID" | awk '{sum+=$1} END {print sum}')
 
 # Check if the limit is exceeded
 if [[ "\$MEMORY_USAGE" -gt "\$MEMORY_LIMIT_MB" ]]; then
-    echo -e "\$(date): Memory limit \$MEMORY_USAGE KB exceeded for \$PROCESS_NAME. Restarting service...\n" >> /var/log/memory_check.log
+    echo -e "\$(date): Memory limit \$MEMORY_USAGE KB exceeded for process with PID \$MONITORED_PID. Restarting service...\n" >> /var/log/memory_check.log
 
-    # Restart the service
+    # Get the service name and restart it
+    SERVICE_NAME=\$(cat /proc/\$MONITORED_PID/cgroup | sed -n 's|.*/\([^.]*\)\.service|\1|p')
+
     if systemctl restart "\$SERVICE_NAME"; then
         echo -e "\$(date): Service \$SERVICE_NAME restarted successfully.\n" >> /var/log/memory_check.log
     else
