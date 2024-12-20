@@ -1,12 +1,13 @@
 #!/bin/bash
+# Version: 1.0.2
 
 while true; do
     # Ask for process name
     echo "Enter the process name to monitor (or a part of it, e.g., starsd):"
     read PROCESS_PART
 
-    # Find all matching processes
-    MATCHING_PROCESSES=$(pgrep -al "^$PROCESS_PART" | awk '{print $2}')
+    # Find all matching processes using ps and grep, then remove the PID and other arguments
+    MATCHING_PROCESSES=$(ps -eo pid,comm | grep "$PROCESS_PART" | awk '{print $2}' | sort | uniq)
 
     if [[ -z "$MATCHING_PROCESSES" ]]; then
         echo "No processes found matching '$PROCESS_PART'. Please try again."
@@ -14,7 +15,7 @@ while true; do
     fi
 
     echo "Matching processes:"
-    # Print the list of matching processes, with numbers
+    # Print the list of matching processes with numbers
     PROCESS_LIST=()
     i=1
     while IFS= read -r line; do
@@ -82,9 +83,10 @@ done
 # Form the path to save the script
 SCRIPT_PATH="$SCRIPT_DIR/memory_check.sh"
 
-# Create the main script
+# Create the main script (overwrites the existing file)
 cat <<EOF > "$SCRIPT_PATH"
 #!/bin/bash
+# Version: 1.0.2
 
 # Process name to monitor
 PROCESS_NAME="$SELECTED_PROCESS"
