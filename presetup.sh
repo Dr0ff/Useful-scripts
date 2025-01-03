@@ -71,7 +71,24 @@ check_required_files "$CONFIG_FILE" "$APP_FILE" "$CLIENT_FILE"
 if prompt_yes_no "Enable pruning?"; then
     echo "Enabling pruning and setting indexer to 'null'..."
     # Update pruning settings in app.toml
-    sed -i.bak -e 's%"default"%"custom"%g; s%pruning-keep-recent = "0"%pruning-keep-recent = "100"%g; s%pruning-interval = "0"%pruning-interval = "10"%g; /pruning-keep-recent = "100"/a\pruning-keep-every = "0"' "$APP_FILE"
+
+# Checking app.toml file and parametre
+if ! grep -q '^pruning-keep-every = "0"$' "$APP_FILE"; then
+    # Adding the parametre
+    sed -i.bak -e '/pruning-keep-recent = "100"/{
+        N
+        s/\npruning-interval = "10"/\npruning-keep-every = "0"\npruning-interval = "10"/
+    }' "$APP_FILE"
+else
+    echo "Parameter 'pruning-keep-every = \"0\"' already exists. Skipping addition."
+fi
+
+# Changing the rest  parameters
+sed -i -e 's%"default"%"custom"%g; 
+           s%pruning-keep-recent = "0"%pruning-keep-recent = "100"%g; 
+           s%pruning-interval = "0"%pruning-interval = "10"%g' "$APP_FILE"
+
+#    sed -i.bak -e 's%"default"%"custom"%g; s%pruning-keep-recent = "0"%pruning-keep-recent = "100"%g; s%pruning-interval = "0"%pruning-interval = "10"%g; /pruning-keep-recent = "100"/a\pruning-keep-every = "0"' "$APP_FILE"
     echo "Pruning settings updated in $APP_FILE."
 
     # Update indexer setting in config.toml
