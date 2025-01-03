@@ -1,5 +1,7 @@
 #!/bin/bash
 
+bash <(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
+
 # Prompt the user to enter the configuration directory
 read -p "Enter the CONFIG_DIR (e.g., .juno or .xpla): " CONFIG_DIR
 
