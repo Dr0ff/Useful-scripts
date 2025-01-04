@@ -212,9 +212,9 @@ if ! which cron > /dev/null; then
 fi
 echo "Trying crontab -l"
 
-if ! sudo crontab -l | grep -Fxq "*/45 * * * * /home/$USER/$SCRIPT_PATH"; then
+if ! sudo crontab -l | grep -Fxq "*/45 * * * * bash /home/$USER/$SCRIPT_PATH"; then
   sudo crontab -l > /tmp/crontab
-  echo "*/45 * * * * /home/$USER/$SCRIPT_PATH" >> /tmp/crontab
+  echo "*/45 * * * * bash /home/$USER/$SCRIPT_PATH" >> /tmp/crontab
   sudo crontab /tmp/crontab
   rm /tmp/crontab
 fi
