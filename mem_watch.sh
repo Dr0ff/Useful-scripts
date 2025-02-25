@@ -15,6 +15,9 @@ echo "//////////////////////////////////////////////////////////////////////////
 echo "||                                                                                         //"
 echo -e "||       \e[0mThis script will help you to configure and install the memory usage monitor     \e[33m  //"
 echo -e "||       \e[0mfor your validator node, just follow few simple steps bellow \e[33m                     //"
+echo -e "||                                                                                         //"
+echo -e "||       \e[0mЭтот скрипт поможет вам установить и настроить мониторинг памяти \e[33m                 //"
+echo -e "||       \e[0mдля вашей ноды, следуйте инструкциям и выполните несколько простых шагов\e[33m          //"
 echo "||                                                                                         //"
 echo "/////////////////////////////////////////////////////////////////////////////////////////////"
 echo " "
@@ -23,24 +26,30 @@ echo " "
 
 
 echo -e "\e[32m Now we need to find the process to monitor the memory consumption\e[0m"
+echo -e "\e[32m Сейчас необходимо найти процесс за которым мы будем вести наблюдение\e[0m"
 echo  ""
 
 # Function to prompt for manual or search input
 prompt_process_name() {
   while true; do
     echo -e "\e[33mEnter the process name or part of it (e.g xpl ju juno ...)\e[0m"
+    echo -e "\e[33mВведите имя процесса или его часть (например: xpl ju juno ...)\e[0m"
+
     read -p "" PROCESS_PART
 
     if [[ -z "$PROCESS_PART" ]] || ! [[ "$PROCESS_PART" =~ ^[a-zA-Z0-9._-]+$ ]]; then
-      echo -e "\e[31mInvalid input. Please try again.\e[0m\n"
+    echo -e "\e[31mInvalid input. Please try again.\e[0m\n"
+    echo -e "\e[31mНеправильный ввод. Попробуйте ещё раз.\e[0m\n"
     else
       MATCHING_PROCESSES=$(ps -eo comm | grep -i "$PROCESS_PART" | sort | uniq)
 
       if [[ -z "$MATCHING_PROCESSES" ]]; then
         echo -e "\e[31mNo matching processes found. Please try again.\e[0m\n"
+        echo -e "\e[31mПодходящих процессов не найдено. Попробуйте ещё.\e[0m\n"
       else
         # Display the matching processes
         echo -e "\n\e[33mMATCHING PROCESSES:\e[0m"
+        echo -e "\n\e[33mПОДХОДЯЩИЕ ПРОЦЕССЫ:\e[0m"
         PROCESS_LIST=()
         i=1
 
@@ -52,6 +61,7 @@ prompt_process_name() {
 
         while true; do
           echo -e "\n\e[33mChoose a correct process\e[0m"
+          echo -e "\n\e[33mВыберите необходимый процесс\e[0m"
           read -p "(1,2,3...):" SELECTION
 
 
@@ -59,12 +69,15 @@ prompt_process_name() {
 	  if [[ "$SELECTION" -ge 1 && "$SELECTION" -le "${#PROCESS_LIST[@]}" ]]; then
 	    SELECTED_PROCESS="${PROCESS_LIST[$SELECTION - 1]}"
 	    echo -e "\n\e[33mPROCESS NAME SELECTED: \e[32m$SELECTED_PROCESS\e[0m\n"
+	    echo -e "\n\e[33mИМЯ ПРОЦЕССА: \e[32m$SELECTED_PROCESS\e[0m\n"
 	    break 2
 	  else
 	    echo -e "\n\e[31mInvalid selection. Please try again.\e[0m"
+	    echo -e "\n\e[31mПлохой выбор. Пробуйте ещё.\e[0m"
 	  fi
 	else
 	  echo -e "\n\e[31mInvalid input. Please enter a number.\e[0m"
+	  echo -e "\n\e[31mНеверный ввод. Пожалуйста, выберите цифру.\e[0m"
 	fi
         done
       fi
