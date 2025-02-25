@@ -161,7 +161,7 @@ echo -e "\n\e[33mSELECTED DIRECTORY:\e[32m '$SELECTED_DIRECTORY'.\n\n\e[33mProce
 
 
 # Form the path to save the script
-SCRIPT_PATH="$SELECTED_DIRECTORY/memory_check.sh"
+SCRIPT_PATH="$SELECTED_DIRECTORY/memory_watch.sh"
 
 # Create the main script (overwrites the existing file)
 cat <<EOF > "$SCRIPT_PATH"
