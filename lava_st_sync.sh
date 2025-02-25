@@ -6,7 +6,7 @@ peers="0d67bedc7f929200d52c8724dfc50f848661f9ba@lava-mainnet-peer.itrocket.net:2
 SNAP_RPC="https://lava-mainnet-rpc.itrocket.net:443"
 sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$peers\"/" $HOME/.lava/config/config.toml 
 LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height);
-BLOCK_HEIGHT=$((LATEST_HEIGHT - 2000));
+BLOCK_HEIGHT=$((LATEST_HEIGHT - 2500));
 TRUST_HASH=$(curl -s "$SNAP_RPC/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash) 
 echo $LATEST_HEIGHT $BLOCK_HEIGHT $TRUST_HASH && sleep 2
 sed -i.bak -E "s|^(enable[[:space:]]+=[[:space:]]+).*$|\1true| ;
