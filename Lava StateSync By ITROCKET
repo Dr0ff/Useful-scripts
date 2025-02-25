@@ -1,3 +1,4 @@
+#!/bin/bash
 sudo systemctl stop lava.service
 
 cp $HOME/.lava/data/priv_validator_state.json $HOME/.lava/priv_validator_state.json.backup
@@ -22,4 +23,5 @@ s|^(seeds[[:space:]]+=[[:space:]]+).*$|\1\"\"|" $HOME/.lava/config/config.toml
 
 mv $HOME/.lava/priv_validator_state.json.backup $HOME/.lava/data/priv_validator_state.json
 
-sudo systemctl restart lavad && sudo journalctl -u lavad -fo cat
+sudo systemctl start lava.service
+sudo journalctl -u lava -f --output cat
