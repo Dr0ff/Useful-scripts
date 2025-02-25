@@ -100,7 +100,7 @@ if prompt_yes_no "Do you want to configure ports for a specific service (e.g., s
         exit 1
     fi
 
-    PORT_STEP=100  # Define the step for port adjustments
+    PORT_STEP=1000  # Define the step for port adjustments
     echo "Adjusting ports for service number $SERVICE_NUMBER with step $PORT_STEP..."
 
     # Calculate new ports for each configuration
