@@ -32,8 +32,8 @@ echo  ""
 # Function to prompt for manual or search input
 prompt_process_name() {
   while true; do
-    echo -e "\e[33mEnter the process name or part of it (e.g xpl ju juno ...)\e[0m"
-    echo -e "\e[33mВведите имя процесса или его часть (например: xpl ju juno ...)\e[0m"
+    echo -e "\e[33mEnter the process name (node binary) or part of it (e.g xpl, ju, juno ...)\e[0m"
+    echo -e "\e[33mВведите имя процесса (название бинарника) или его часть (например: xpl, ju, juno ...)\e[0m"
 
     read -p "" PROCESS_PART
 
@@ -60,8 +60,8 @@ prompt_process_name() {
         done <<< "$MATCHING_PROCESSES"
 
         while true; do
-          echo -e "\n\e[33mChoose a correct process\e[0m"
-          echo -e "\n\e[33mВыберите необходимый процесс\e[0m"
+          echo -e "\n\e[33mEnter process number\e[0m"
+          echo -e "\n\e[33mВведит номер процесса\e[0m"
           read -p "(1,2,3...):" SELECTION
 
 
@@ -90,6 +90,9 @@ prompt_directory() {
   while true; do
     echo -e "\n\e[32mWe need to find the directory to save this script (e.g. .xpla or .juno...)\e[0m"
     echo "Searching for matching directories..."
+    echo -e "\n\e[32mТеперь нужно найти директорию где сохранить скрипт(e.g. .xpla or .juno...)\e[0m"
+    echo "Поиск подходящей директории..."
+
 
     # Searching for directory, filtering .(dot)
     DIRECTORIES=$(find . -maxdepth 1 -type d -name ".${SELECTED_PROCESS:0:4}*" 2>/dev/null | sed 's/^\.\///g')
@@ -97,9 +100,12 @@ prompt_directory() {
     if [[ -z "$DIRECTORIES" ]]; then
       echo -e "\n\e[31mNo matching directories found.\n\e[33mLooks like the directory doesn't exist.\e[0m"
       echo -e "\n\e[33mPlease check the installation directory and try again\nExiting...\e[0m"
+      echo -e "\n\e[31mНужная директория не найдена.\n\e[33mПохоже её не существует.\e[0m"
+      echo -e "\n\e[33mПожалуйста убедитесь в том,что нода установлена корректно\nЗавершаем работу...\e[0m"
       exit 1
     else
       echo -e "\n\e[33mMATCHING DIRECTORIES:\e[0m"
+      echo -e "\n\e[33mПОДХОДЯЩИИЕ ДИРЕКТОРИИ:\e[0m"
       i=1
       DIRECTORY_LIST=()
       for DIR in $DIRECTORIES; do
@@ -109,17 +115,20 @@ prompt_directory() {
       done
 #      echo -e "\n\e[33mWe have found some\e[0m"
       echo -e "\n\e[33mEnter the number corresponding to the right directory\e[0m"
+      echo -e "\n\e[33mВведите номер соответсвующей директории\e[0m"
       read -p "(1,2,3...):" DIR_SELECTION
       if [[ "$DIR_SELECTION" -ge 1 && "$DIR_SELECTION" -le "${#DIRECTORY_LIST[@]}" ]]; then
         SELECTED_DIRECTORY="${DIRECTORY_LIST[$DIR_SELECTION - 1]}"
         break
       else
         echo -e "\n\e[31mError: Invalid selection. Please try again.\e[0m"
+	echo -e "\n\e[31mОшибка: Неправильный выбор. Попробуйте снова.\e[0m"
       fi
     fi
   done
 
   echo -e "\n\e[33mDIRECTORY SELECTED: \e[32m$SELECTED_DIRECTORY\e[0m"
+  echo -e "\n\e[33mВЫБРАННАЯ ДИРЕКТОРИЯ: \e[32m$SELECTED_DIRECTORY\e[0m"
 }
 
 # Main script logic
@@ -144,6 +153,7 @@ prompt_directory
 # Prompt for memory limit
 while true; do
   echo -e "\n\e[33mEnter the memory limit in kilobytes (e.g., 3000000 for 2.8 GB) or press Enter to use the default (3 GB):\e[0m"
+  echo -e "\n\e[33mВведите лимит памяти для процесса в килобайтах (e.g., 3000000 для 2.8 GB) или нажмите клавишу ВВОД, чтобы использовать значение по умолчанию (3 GB):\e[0m"
   read -p "" MEMORY_LIMIT
 
   # Check if input is empty, and use default value if so
@@ -163,6 +173,7 @@ while true; do
     break
   else
     echo -e "\n\e[31mInvalid input. Please enter a numeric value.\e[0m"
+    echo -e "\n\e[31mНеправильный ввод. Пожалуйста введице цифровые значения.\e[0m"
   fi
 done
 
