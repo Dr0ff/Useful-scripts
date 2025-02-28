@@ -30,8 +30,9 @@ done
 sudo -v
 block=$($binary status | jq -r '.SyncInfo.latest_block_height')
 snap_file=~/"${network}_snap_$(date +%Y-%m-%d)_$block.tar.lz4"
-echo -e "\n\e[33mYour snapshot will be saved to: $snap_file\e[0m"
-
+echo -e "⚠️\   Your snapshot will be saved to: \n\e[33m$snap_file\e[0m"
+echo -e "⚠️  To unpack your snapshot use:\n\e[33mlz4 -c -d $snap_file | tar -x -C ~/.$network\e[0m"
+exit 1
 # Останавливаем ноду
 sudo systemctl stop $network.service
 
@@ -41,3 +42,4 @@ tar -cf - -C ~/.$network data | lz4 -9 > $snap_file
 # Запускаем ноду
 sudo systemctl start $network.service
 
+echo -e "\nTo unpacking your snapshot use:\n\e[33mlz4 -c -d $snap_file | tar -x -C ~/.$network\e[0m"
