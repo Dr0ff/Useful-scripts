@@ -36,7 +36,6 @@ echo -e "\n\e[33mYour snapshot will be saved to: $snap_file\e[0m"
 sudo systemctl stop $network.service
 
 # Создаём снапшот, сохраняя только `data/`
-#tar -cf - -C ~/.$network data | lz4 -9 > ~/$network_snap_$(date +%Y-%m-%d)_$block.tar.lz4
 tar -cf - -C ~/.$network data | lz4 -9 > $snap_file
 
 # Запускаем ноду
