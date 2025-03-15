@@ -1,4 +1,7 @@
 #!/bin/bash
+## To launch this script run this command in your node's terminal:
+## curl https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/sommelier_stat_sync_.sh | bash
+
 sudo systemctl stop sommelier.service
 cp $HOME/.sommelier/data/priv_validator_state.json $HOME/.sommelier/priv_validator_state.json.backup
 sommelier tendermint unsafe-reset-all --home $HOME/.sommelier --keep-addr-book
