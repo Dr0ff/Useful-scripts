@@ -1,7 +1,5 @@
 #!/bin/bash
 sudo systemctl stop juno.service
-cp $HOME/.juno/data/priv_validator_state.json $HOME/.juno/priv_validator_state.json.backup
-junod tendermint unsafe-reset-all --home $HOME/.juno --keep-addr-book
 peers=""
 SNAP_RPC="https://juno-rpc.polkachu.com:443"
 sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$peers\"/" $HOME/.juno/config/config.toml 
@@ -14,7 +12,8 @@ s|^(rpc_servers[[:space:]]+=[[:space:]]+).*$|\1\"$SNAP_RPC,$SNAP_RPC\"| ;
 s|^(trust_height[[:space:]]+=[[:space:]]+).*$|\1$BLOCK_HEIGHT| ;
 s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"| ;
 s|^(seeds[[:space:]]+=[[:space:]]+).*$|\1\"\"|" $HOME/.juno/config/config.toml
-
+cp $HOME/.juno/data/priv_validator_state.json $HOME/.juno/priv_validator_state.json.backup
+junod tendermint unsafe-reset-all --home $HOME/.juno --keep-addr-book
 # Remove the empty wasm folder if you have an empty one, just in case
 # rm -r ~/.juno/data/wasm
 # Get our wasm folder
