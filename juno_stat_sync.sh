@@ -2,7 +2,7 @@
 sudo systemctl stop juno.service
 cp $HOME/.juno/data/priv_validator_state.json $HOME/.juno/priv_validator_state.json.backup
 junod tendermint unsafe-reset-all --home $HOME/.juno --keep-addr-book
-peers="0858341ab2e1cbe062c4a8d82223afbd9610a8ff@65.109.93.44:12656"
+peers=""
 SNAP_RPC="https://juno-rpc.polkachu.com:443"
 sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$peers\"/" $HOME/.juno/config/config.toml 
 LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height);
