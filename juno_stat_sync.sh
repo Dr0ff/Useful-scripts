@@ -16,13 +16,13 @@ s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"| ;
 s|^(seeds[[:space:]]+=[[:space:]]+).*$|\1\"\"|" $HOME/.juno/config/config.toml
 
 # Remove the empty wasm folder if you have an empty one, just in case
-#rm -r ~/.juno/data/wasm
+# rm -r ~/.juno/data/wasm
 # Get our wasm folder
-#wget -O juno_wasmonly.tar.lz4 https://snapshots.polkachu.com/wasm/juno/juno_wasmonly.tar.lz4 --inet4-only
+# wget -O juno_wasmonly.tar.lz4 https://snapshots.polkachu.com/wasm/juno/juno_wasmonly.tar.lz4 --inet4-only
 # Extract the wasm folder into the right place
-#lz4 -c -d juno_wasmonly.tar.lz4  | tar -x -C $HOME/.juno/data
+# lz4 -c -d juno_wasmonly.tar.lz4  | tar -x -C $HOME/.juno/data
 # Clean up
-#rm juno_wasmonly.tar.lz4
+# rm juno_wasmonly.tar.lz4
 
 mv $HOME/.juno/priv_validator_state.json.backup $HOME/.juno/data/priv_validator_state.json
 sudo systemctl start juno.service
