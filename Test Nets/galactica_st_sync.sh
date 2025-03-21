@@ -3,13 +3,15 @@
 #https://galactica.rpc.t.stavr.tech:443
 #https://rpc-reticulum.galactica.com:443
 SNAP_RPC="https://galactica-testnet-rpc.polkachu.com:443"
+#peers="f3cd6b6ebf8376e17e630266348672517aca006a@46.4.5.45:27456"
+peers=""
 BACK_TO_BLOCKS=2000
 echo -e "\e[33mRPC NODE:\e[32m $SNAP_RPC\e[0m"
 echo -e "\e[33mBack to blocks:\e[32m $BACK_TO_BLOCKS\e[0m"
 
 cp $HOME/.galactica/data/priv_validator_state.json $HOME/.galactica/priv_validator_state.json.backup
 galacticad tendermint unsafe-reset-all --home $HOME/.galactica --keep-addr-book
-peers="f3cd6b6ebf8376e17e630266348672517aca006a@46.4.5.45:27456"  
+  
 
 sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$peers\"/" $HOME/.galactica/config/config.toml 
 LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height);
