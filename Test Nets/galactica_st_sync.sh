@@ -24,6 +24,6 @@ s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"| ;
 s|^(seeds[[:space:]]+=[[:space:]]+).*$|\1\"\"|" $HOME/.galactica/config/config.toml
 mv $HOME/.galactica/priv_validator_state.json.backup $HOME/.galactica/data/priv_validator_state.json
 #galacticad start --home=$HOME/.galactica --chain-id=galactica_9302-1 --keyring-backend=file --pruning=nothing --metrics --rpc.unsafe --log_level=info --json-rpc.enable=true --json-rpc.enable-indexer=true --json-rpc.api=eth,txpool,personal,net,debug,web3 --api.enable
-galacticad start --home=$HOME/.galactica --chain-id=galactica_9302-1
+galacticad start --chain-id=galactica_9302-1
 #sudo systemctl start galactica.service
 #sudo journalctl -u lava -f --output cat
