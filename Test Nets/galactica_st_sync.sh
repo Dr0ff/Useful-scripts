@@ -1,10 +1,9 @@
 #!/bin/bash
-galacticad stop
-#sudo systemctl stop galactica.service
+sudo systemctl stop galactica.service
 #https://galactica.rpc.t.stavr.tech:443
 #https://rpc-reticulum.galactica.com:443
 SNAP_RPC="https://galactica.rpc.t.stavr.tech:443"
-BACK_TO_BLOCKS=2000
+BACK_TO_BLOCKS=1000
 echo -e "\e[33mRPC NODE:\e[32m $SNAP_RPC\e[0m"
 echo -e "\e[33mBack to blocks:\e[32m $BACK_TO_BLOCKS\e[0m"
 
@@ -24,6 +23,6 @@ s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"| ;
 s|^(seeds[[:space:]]+=[[:space:]]+).*$|\1\"\"|" $HOME/.galactica/config/config.toml
 mv $HOME/.galactica/priv_validator_state.json.backup $HOME/.galactica/data/priv_validator_state.json
 #galacticad start --home=$HOME/.galactica --chain-id=galactica_9302-1 --keyring-backend=file --pruning=nothing --metrics --rpc.unsafe --log_level=info --json-rpc.enable=true --json-rpc.enable-indexer=true --json-rpc.api=eth,txpool,personal,net,debug,web3 --api.enable
-galacticad start --chain-id=galactica_9302-1
-#sudo systemctl start galactica.service
-#sudo journalctl -u lava -f --output cat
+#galacticad start --chain-id=galactica_9302-1
+sudo systemctl start galactica.service
+sudo journalctl -u galactica -f --output cat
