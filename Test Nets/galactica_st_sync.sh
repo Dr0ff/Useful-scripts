@@ -1,8 +1,9 @@
 #!/bin/bash
 #sudo systemctl stop galactica.service
-#https://galactica.rpc.t.stavr.tech:443
-#https://rpc-reticulum.galactica.com:443
-SNAP_RPC="https://galactica-testnet-rpc.polkachu.com:443"
+# https://galactica.rpc.t.stavr.tech:443
+# https://rpc-reticulum.galactica.com:443
+# https://galactica-testnet-rpc.polkachu.com:443
+SNAP_RPC="https://galactica.rpc.t.stavr.tech:443"
 #peers="f3cd6b6ebf8376e17e630266348672517aca006a@46.4.5.45:27456"
 peers=""
 BACK_TO_BLOCKS=2000
@@ -26,5 +27,5 @@ s|^(seeds[[:space:]]+=[[:space:]]+).*$|\1\"\"|" $HOME/.galactica/config/config.t
 mv $HOME/.galactica/priv_validator_state.json.backup $HOME/.galactica/data/priv_validator_state.json
 #galacticad start --home=$HOME/.galactica --chain-id=galactica_9302-1 --keyring-backend=file --pruning=nothing --metrics --rpc.unsafe --log_level=info --json-rpc.enable=true --json-rpc.enable-indexer=true --json-rpc.api=eth,txpool,personal,net,debug,web3 --api.enable
 #galacticad start --chain-id=galactica_9302-1
-sudo systemctl start galactica.service
+sudo systemctl restart galactica.service
 sudo journalctl -u galactica -f --output cat
