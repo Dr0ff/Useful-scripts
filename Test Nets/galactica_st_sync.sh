@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo systemctl stop lava.service
+#sudo systemctl stop galactica.service
 SNAP_RPC="https://rpc-reticulum.galactica.com:443"
 BACK_TO_BLOCKS=2000
 echo -e "\e[33mRPC NODE:\e[32m $SNAP_RPC\e[0m"
