@@ -1,5 +1,5 @@
 #!/bin/bash
-sudo systemctl stop galactica.service
+#sudo systemctl stop galactica.service
 #https://galactica.rpc.t.stavr.tech:443
 #https://rpc-reticulum.galactica.com:443
 SNAP_RPC="https://galactica-testnet-rpc.polkachu.com:443"
