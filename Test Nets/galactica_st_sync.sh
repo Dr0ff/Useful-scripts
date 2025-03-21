@@ -2,7 +2,7 @@
 sudo systemctl stop galactica.service
 #https://galactica.rpc.t.stavr.tech:443
 #https://rpc-reticulum.galactica.com:443
-SNAP_RPC="https://galactica.rpc.t.stavr.tech:443"
+SNAP_RPC="https://galactica-testnet-rpc.polkachu.com:443"
 BACK_TO_BLOCKS=1000
 echo -e "\e[33mRPC NODE:\e[32m $SNAP_RPC\e[0m"
 echo -e "\e[33mBack to blocks:\e[32m $BACK_TO_BLOCKS\e[0m"
