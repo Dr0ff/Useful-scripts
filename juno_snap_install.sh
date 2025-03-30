@@ -7,7 +7,8 @@ echo -e "\n\e[33m Этот скрипт производит очистку но
 echo -e "\n\e[32m Ссылку на снапшот можно взять на сайте \e[34m https://polkachu.com/tendermint_snapshots/juno\e[0m"
 echo -e "\e[32m Правый клик на файле для загрузки и там выбрать\e[33m \"Скопировать адрес\"\e[0m"
 read -p "Вставьте сюда ссылку на снапшот: " SNAP_LINK
-echo "$SNAP_LINK
+echo -e "\n\e[33m Для продолжения нажмите любую клавишу \n *Для прерывания процесса комбинацию CTRL+C \e[0m"
+read -p ""
 wget -O juno_latest.tar.lz4 $SNAP_LINK --inet4-only
 sudo systemctl stop juno.service
 cp $HOME/.juno/data/priv_validator_state.json $HOME/.juno/priv_validator_state.json.backup
