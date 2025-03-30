@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo -v
-read -p "" SNAP_LINK
+read -p "Enter" SNAP_LINK
 echo "$SNAP_LINK"
 #wget -O juno_latest.tar.lz4 $SNAP_LINK --inet4-only
 #sudo systemctl stop juno.service
