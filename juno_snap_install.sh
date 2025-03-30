@@ -1,6 +1,9 @@
 #!/bin/bash
+
+bash <(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
+
 sudo -v
-echo -e "Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!"
+echo -e "\e32[m Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e0[m"
 echo -e "Ссылку на снапшот можно взять на сайте https://polkachu.com/tendermint_snapshots/juno"
 read -p "Вставьте сюда ссылку на снапшот: " SNAP_LINK
 echo "$SNAP_LINK"
