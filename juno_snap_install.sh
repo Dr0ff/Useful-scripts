@@ -3,10 +3,11 @@
 bash <(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
 
 sudo -v
-echo -e "\e32[m Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e0[m"
-echo -e "Ссылку на снапшот можно взять на сайте https://polkachu.com/tendermint_snapshots/juno"
+echo -e "\n\e[33m Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e[0m"
+echo -e "\n\e[32m Ссылку на снапшот можно взять на сайте \e[34m https://polkachu.com/tendermint_snapshots/juno\e[0m"
+echo -e "\e[32m Правый клик на файле для загрузки и там выбрать\e[33m \"Скопировать адрес\"\e[0m"
 read -p "Вставьте сюда ссылку на снапшот: " SNAP_LINK
-echo "$SNAP_LINK"
+echo "$SNAP_LINK
 wget -O juno_latest.tar.lz4 $SNAP_LINK --inet4-only
 sudo systemctl stop juno.service
 cp $HOME/.juno/data/priv_validator_state.json $HOME/.juno/priv_validator_state.json.backup
