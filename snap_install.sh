@@ -2,9 +2,16 @@
 
 bash <(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
 
-read -p "Введите Имя Сети: " NAME
-read -p "Введите название директории ноды: " DIR
-read -p "Введите Имя бинарника: " BIN
+echo -e "\n\e[33m Введите Имя Сети: \e[0m"
+read -p " " NAME
+echo -e "\n\e[33m Введите название директории ноды (без точки перед именем): \e[0m"
+read -p " " DIR
+echo -e "\n\e[33m Введите имя бинарника (пример: junod, starsd...) : \e[0m"
+read -p " " BIN
+
+echo -e "\n\e[33m Нажмите любую клавишу, чтобы продолжить\e[0m"
+echo -e "\e[33m Или CTRL+C, чтобы прервать процесс\e[0m"
+read -p " "
 
 #NAME=juno
 #DIR=juno
