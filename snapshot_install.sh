@@ -2,11 +2,13 @@
 
 bash <(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
 
-echo -e "\n\e[33m Введите Имя Сети: \e[0m"
+echo -e "\n\e[33m Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e[0m"
+
+echo -e "\n\e[33m Введите Имя Сети (пример: sentinel, stargaze) : \e[0m"
 read -p " " NAME
-echo -e "\n\e[33m Введите название директории ноды (без точки перед именем): \e[0m"
+echo -e "\n\e[33m Введите название директории ноды (без точки перед именем) : \e[0m"
 read -p " " DIR
-echo -e "\n\e[33m Введите имя бинарника (пример: junod, starsd...) : \e[0m"
+echo -e "\n\e[33m Введите имя бинарника (пример: junod, starsd sentinelhub...) : \e[0m"
 read -p " " BIN
 
 echo -e "\n\e[32m Нажмите любую клавишу, чтобы продолжить\e[0m"
@@ -18,7 +20,6 @@ read -p " "
 #BIN=junod
 
 sudo -v
-echo -e "\n\e[33m Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e[0m"
 echo -e "\n\e[32m Ссылку на снапшот можно взять на сайте \e[33m https://polkachu.com/tendermint_snapshots/${NAME}\e[0m"
 echo -e "\e[32m Правый клик на файле для загрузки и там выбрать\e[33m \"Копировать адрес ссылки\"\e[0m"
 read -p "Вставьте сюда ссылку на снапшот: " SNAP_LINK
