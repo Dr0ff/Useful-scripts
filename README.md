@@ -1,8 +1,20 @@
 # Useful-scripts
 Useful scripts to make validators life easier
 
+# Snapshot Install your nodes!
+Scpripts to help easy clean/setup your nodes's database with snapshot
+
+## Snapshot installation script
+Run following comand in your node's server terminal </br>
+Русская версия:
+```
+wget -O snapshot_install.sh https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/snapshot_install.sh
+bash snapshot_install.sh
+```
+
+
 # StateSync your nodes!
-Scpripts to help easy clean/setup your nodes's database
+Scpripts to help easy clean/setup your nodes's database using StateSync
 ## Juno
 Run following comand in your node's server terminal
 ```
@@ -19,15 +31,7 @@ Run following comand in your node's server terminal
 curl https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/lava_st_sync.sh | bash
 ```
 
-# Snapshot Install your nodes!
-Scpripts to help easy clean/setup your nodes's database with snapshot
 
-## Stargaze
-Run following comand in your node's server terminal
-```
-wget -O stargaze_snap_install.sh https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/stargaze_snap_install.sh
-bash stargaze_snap_install.sh
-```
 
 
 -------------------------
