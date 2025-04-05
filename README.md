@@ -20,9 +20,10 @@ curl https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/lava
 ```
 
 # Snapshot Install your nodes!
-Scpripts to help easy clean/setup your nodes's database
+Scpripts to help easy clean/setup your nodes's database with snapshot
 ```
 wget -O https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/stargaze_snap_install.sh
+bash stargaze_snap_install.sh
 ```
 
 
