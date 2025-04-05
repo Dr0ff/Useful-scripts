@@ -25,7 +25,7 @@ Scpripts to help easy clean/setup your nodes's database with snapshot
 ## Stargaze
 Run following comand in your node's server terminal
 ```
-wget -O https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/stargaze_snap_install.sh
+wget -O stargaze_snap_install.sh https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/stargaze_snap_install.sh
 bash stargaze_snap_install.sh
 ```
 
