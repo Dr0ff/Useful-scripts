@@ -8,7 +8,7 @@
 SNAP_RPC="https://galactica-testnet-rpc.polkachu.com:443"
 #peers="f3cd6b6ebf8376e17e630266348672517aca006a@46.4.5.45:27456"
 peers=""
-BACK_TO_BLOCKS=2000
+BACK_TO_BLOCKS=3000
 echo -e "\e[33mRPC NODE:\e[32m $SNAP_RPC\e[0m"
 echo -e "\e[33mBack to blocks:\e[32m $BACK_TO_BLOCKS\e[0m"
 
