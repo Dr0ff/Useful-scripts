@@ -1,11 +1,12 @@
 #!/bin/bash
 #sudo systemctl stop galactica.service
 
-# https://galactica.rpc.t.stavr.tech:443
-# https://rpc-reticulum.galactica.com:443
-# https://galactica-testnet-rpc.polkachu.com:443
+ SNAP_RPC="https://galactica-testnet-rpc.itrocket.net"
+# SNAP_RPC="https://galactica.rpc.t.stavr.tech:443"
+# SNAP_RPC="https://rpc-reticulum.galactica.com:443"
+# SNAP_RPC="https://galactica-testnet-rpc.polkachu.com:443"
 
-SNAP_RPC="https://galactica-testnet-rpc.polkachu.com:443"
+#SNAP_RPC="https://galactica-testnet-rpc.polkachu.com:443"
 #peers="f3cd6b6ebf8376e17e630266348672517aca006a@46.4.5.45:27456"
 peers=""
 BACK_TO_BLOCKS=3000
