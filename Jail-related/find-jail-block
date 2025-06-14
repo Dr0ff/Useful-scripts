@@ -1,0 +1,91 @@
+#!/bin/bash
+
+# --- Настройки ---
+# !!! ВАЖНО: Убедитесь, что здесь указан РАБОЧИЙ узел, который вы проверили командой 'junod status' !!!
+NODE="https://juno-rpc.polkachu.com:443"
+VALIDATOR="junovaloper1tx2u0nvjwregdv6a5t5k7z0krv6l8l6hgq4z85"
+
+# Точные границы поиска, основанные на ваших данных.
+START_BLOCK=27318000 
+END_BLOCK=27342728
+# -----------------
+
+# Функция для запроса статуса с бесконечными попытками и проверкой успеха команды
+query_with_retry() {
+    local block_to_check=$1
+    local attempt=1
+    
+    while true; do # Бесконечный цикл
+        # Шаг 1: Пытаемся выполнить команду и получить сырой вывод
+        local output=$(junod q staking validator $VALIDATOR --height $block_to_check --node $NODE -o json 2>/dev/null)
+        local exit_code=$? # Запоминаем код завершения команды
+
+        # Шаг 2: Проверяем, что команда завершилась успешно (код 0) и вывод не пустой
+        if [[ $exit_code -eq 0 && -n "$output" ]]; then
+            # Шаг 3: Только теперь обрабатываем валидный JSON
+            local result=$(echo "$output" | jq '.validator.jailed // false')
+            echo "$result"
+            return 0
+        fi
+
+        # Если мы здесь, значит, запрос провалился. Повторяем.
+        echo "Попытка $attempt не удалась (нет ответа от ноды) для блока $block_to_check. Повтор через 2 секунды..."
+        sleep 2
+        ((attempt++))
+    done
+}
+
+
+JAIL_BLOCK=0
+
+echo "--- Запуск финального, робастного поиска в диапазоне [$START_BLOCK ... $END_BLOCK] ---"
+
+while [[ $START_BLOCK -le $END_BLOCK ]]; do
+    MID_BLOCK=$((START_BLOCK + (END_BLOCK - START_BLOCK) / 2))
+    
+    echo -n "Проверка блока $MID_BLOCK... "
+    IS_JAILED=$(query_with_retry $MID_BLOCK)
+    echo "Статус Jailed: $IS_JAILED"
+
+    if [[ "$IS_JAILED" == "true" ]]; then
+        JAIL_BLOCK=$MID_BLOCK
+        END_BLOCK=$((MID_BLOCK - 1))
+    else
+        START_BLOCK=$((MID_BLOCK + 1))
+    fi
+    sleep 0.5
+done
+
+echo "---------------------------------------------------------"
+
+if [[ $JAIL_BLOCK -ne 0 ]]; then
+    echo "Бинарный поиск завершен. Запускаю финальную верификацию..."
+    echo ""
+
+    BLOCK_N=$JAIL_BLOCK
+    BLOCK_N_MINUS_1=$((JAIL_BLOCK - 1))
+
+    # Финальная проверка с использованием той же надежной функции
+    STATUS_N_MINUS_1=$(query_with_retry $BLOCK_N_MINUS_1)
+    STATUS_N=$(query_with_retry $BLOCK_N)
+
+    echo "--- Результаты верификации ---"
+    echo "Статус на блоке $BLOCK_N_MINUS_1: $STATUS_N_MINUS_1"
+    echo "Статус на блоке $BLOCK_N: $STATUS_N"
+    echo "-----------------------------"
+    
+    if [[ "$STATUS_N" == "true" && "$STATUS_N_MINUS_1" == "false" ]]; then
+        echo "✅ ПОДТВЕРЖДЕНО! Переход произошел точно между этими блоками."
+        echo ""
+        echo "Найден первый блок с состоянием JAILED: $BLOCK_N"
+        echo "Снапшот для компенсации нужно делать на блоке: $BLOCK_N_MINUS_1"
+        echo "---------------------------------------------------------"
+    else
+        echo "⚠️ ВНИМАНИЕ: Произошла логическая ошибка."
+        echo "Скрипт получил неожиданные данные на этапе верификации."
+        echo "Предполагаемый блок тюрьмы: $BLOCK_N. Требуется финальная ручная проверка."
+        echo "---------------------------------------------------------"
+    fi
+else
+    echo "Не удалось найти блок, где валидатор был в тюрьме, в заданном диапазоне."
+fi
