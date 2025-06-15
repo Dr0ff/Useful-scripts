@@ -8,7 +8,7 @@ FILE_BEFORE="snapshot_27339152.csv"
 FILE_AFTER="snapshot_27342729.csv"
 
 # --- ОПЦИЯ: Дополнительная компенсация (значения по умолчанию) ---
-ADD_EXTRA_COMPENSATION=true
+ADD_EXTRA_COMPENSATION=false
 EXTRA_PERCENTAGE=25
 # --------------------
 
@@ -44,18 +44,20 @@ if [[ "$confirm" != "y" && "$confirm" != "Y" && -n "$confirm" ]]; then
         fi
     else
         ADD_EXTRA_COMPENSATION=false
-        EXTRA_PERCENTAGE=0 # Если опция выключена, процент не имеет значения
     fi
     echo "Настройки обновлены."
 fi
 # --- КОНЕЦ ИНТЕРАКТИВНОГО БЛОКА ---
 
 
-# --- Динамическое формирование имени выходного файла ---
+# --- Подготовка переменных для AWK и динамического имени файла ---
 if [ "$ADD_EXTRA_COMPENSATION" = true ]; then
     OUTPUT_FILE="compensation_amounts_${EXTRA_PERCENTAGE}_pc.csv"
+    # Создаем множитель, например 1.25 для 25%
+    COMPENSATION_MULTIPLIER=$(echo "1 + $EXTRA_PERCENTAGE / 100" | bc -l)
 else
     OUTPUT_FILE="compensation_amounts.csv"
+    COMPENSATION_MULTIPLIER=1
 fi
 
 
@@ -71,19 +73,19 @@ echo "ДО:   $FILE_BEFORE"
 echo "ПОСЛЕ: $FILE_AFTER"
 
 if [ "$ADD_EXTRA_COMPENSATION" = true ]; then
-    echo "ОПЦИЯ: Добавляю $EXTRA_PERCENTAGE% к сумме компенсации."
+    echo "ОПЦИЯ: Компенсация будет умножена на $COMPENSATION_MULTIPLIER (+$EXTRA_PERCENTAGE%)."
 else
-    echo "ОПЦИЯ: Расчет компенсации без дополнительных процентов."
+    echo "ОПЦИЯ: Расчет компенсации 1-в-1 (без дополнительных процентов)."
 fi
 
 echo "Итоговый файл будет назван: $OUTPUT_FILE"
 echo "---------------------------------"
 
-# Передаем настройки из Bash в AWK с помощью флага -v
-awk -v add_extra="$ADD_EXTRA_COMPENSATION" -v extra_pct="$EXTRA_PERCENTAGE" '
+# Передаем только множитель в AWK
+awk -v multiplier="$COMPENSATION_MULTIPLIER" '
 BEGIN { 
     FS=OFS=","
-    print "delegator_address,compensation_amount_ujuno"
+    # Удалена строка с печатью заголовка
 }
 FNR==NR {
     gsub(/"/, "", $1); 
@@ -97,16 +99,10 @@ FNR==NR {
     
     loss = before[$1] - $2;
     
-    # Рассчитываем итоговую сумму для компенсации
-    compensation = 0; # По умолчанию компенсация равна 0
+    compensation = 0;
     if (loss > 0) {
-        if (add_extra == "true") {
-            # Рассчитываем потерю + процент
-            compensation = loss * (1 + (extra_pct / 100));
-        } else {
-            # Просто потеря без доплаты
-            compensation = loss;
-        }
+        # Всегда используем одну простую формулу
+        compensation = loss * multiplier;
     }
     
     # Печатаем адрес и итоговую сумму, округленную до целого числа
@@ -118,12 +114,7 @@ END {
     # Обрабатываем тех, кто полностью вывел стейк
     for (addr in before) {
         loss = before[addr];
-        compensation = 0;
-        if (add_extra == "true") {
-            compensation = loss * (1 + (extra_pct / 100));
-        } else {
-            compensation = loss;
-        }
+        compensation = loss * multiplier;
         printf "%s,%.0f\n", addr, compensation;
     }
 }
