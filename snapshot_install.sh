@@ -2,7 +2,7 @@
 
 bash <(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
 
-echo -e "\n\e[33m Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e[0m"
+echo -e "\n\e[31m Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e[0m"
 
 echo -e "\n\e[33m Введите Имя Сети (пример: sentinel, stargaze) : \e[0m"
 read -p " " NAME
@@ -35,5 +35,5 @@ rm -r ~/.$DIR/wasm
 lz4 -c -d ${NAME}_latest.tar.lz4  | tar -x -C $HOME/.$DIR
 mv $HOME/.$DIR/priv_validator_state.json.backup $HOME/.$DIR/data/priv_validator_state.json
 sudo systemctl start ${NAME}.service
-sudo journalctl -u $NAME -f --output cat
 rm -v ${NAME}_latest.tar.lz4
+sudo journalctl -u $NAME -f --output cat
