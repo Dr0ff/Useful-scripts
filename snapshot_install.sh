@@ -23,7 +23,7 @@ read -p " "
 #DIR=juno
 #BIN=junod
 
-echo -e "\n\e[93m                            --- Получение снапшота ---\e[0m"
+echo -e "\n\e[93m                           --- Получение снапшота ---\e[0m"
 
 # echo -e "\n\e[93m Ссылку на снапшот можно взять на сайте \e[33m https://polkachu.com/tendermint_snapshots/${NAME}\e[0m"
 echo -e "\n\e[93m  ⚠️   Перейдите на сайт: \e[97m https://polkachu.com/tendermint_snapshots/${NAME}\e[0m"
@@ -33,7 +33,7 @@ read -p "Вставьте ссылку на снапшот: " SNAP_LINK
 echo -e "\n\e[93m Для продолжения нажмите любую клавишу \e[0m"
 read -p ""
 
-echo -e "\n\e[93m                             --- Скачиваю снапшот ---\n\e[0m"
+echo -e "\n\e[93m                           --- Скачиваю снапшот ---\n\e[0m"
 
 wget -O ${NAME}_latest.tar.lz4 $SNAP_LINK --inet4-only
 
@@ -44,7 +44,7 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-echo -e "\n\e[93m                                --- Установка ---\e[0m"
+echo -e "\n\e[93m                               --- Установка ---\e[0m"
 echo -e "\n\e[93m Возможно потребуется пароль SUDO \n\e[0m"
 
 sudo -v
