@@ -8,12 +8,12 @@ echo -e "\e[37m  ---------------------------------------------------------------
 
 echo -e "\n\e[93m         --- Настройки ---\e[0m"
 
-echo -e "\n\e[93m Как называется ваша сеть? (пример: sentinel, stargaze, etc...)\e[0m"
+echo -e "\n\e[93m Как называется ваша сеть? (пример: sentinel, stargaze, etc...)\n\e[0m"
 read -p "Введите имя сети: " NAME
-echo -e "\n\e[93m В какой директории находится нода? (.sentinelhub, .starsd, etc...) : \e[0m"
-read -p "Введите название (без точки) " DIR
-echo -e "\n\e[93m Как называется DAEMON (бинарник)  (пример: junod, starsd, sentinelhub...) : \e[0m"
-read -p "Введите имя бинарника " BIN
+echo -e "\n\e[93m В какой директории находится нода? (.sentinelhub, .starsd, etc...)\n\e[0m"
+read -p "Введите название (без точки): " DIR
+echo -e "\n\e[93m Как называется DAEMON (бинарник)  (пример: junod, starsd, sentinelhub...)\n\e[0m"
+read -p "Введите имя бинарника: " BIN
 
 echo -e "\n\e[93m Для продолжения нажмите любую клавишу\e[0m"
 echo -e "\e[91m Или CTRL+C, для прерывания процесса\e[0m"
