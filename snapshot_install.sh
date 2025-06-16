@@ -2,17 +2,17 @@
 
 bash <(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
 
-echo -e "\n\e[31m Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e[0m"
+echo -e "\n\e[93m Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e[0m"
 
-echo -e "\n\e[33m Введите Имя Сети (пример: sentinel, stargaze) : \e[0m"
+echo -e "\n\e[93m Введите Имя Сети (пример: sentinel, stargaze) : \e[0m"
 read -p " " NAME
-echo -e "\n\e[33m Введите название директории ноды (без точки перед именем) : \e[0m"
+echo -e "\n\e[93m Введите название директории ноды (без точки перед именем) : \e[0m"
 read -p " " DIR
-echo -e "\n\e[33m Введите имя бинарника (пример: junod, starsd sentinelhub...) : \e[0m"
+echo -e "\n\e[93m Введите имя бинарника (пример: junod, starsd sentinelhub...) : \e[0m"
 read -p " " BIN
 
-echo -e "\n\e[32m Нажмите любую клавишу, чтобы продолжить\e[0m"
-echo -e "\e[31m Или CTRL+C, чтобы прервать процесс\e[0m"
+echo -e "\n\e[92m Нажмите любую клавишу, чтобы продолжить\e[0m"
+echo -e "\e[91m Или CTRL+C, чтобы прервать процесс\e[0m"
 read -p " "
 
 #NAME=juno
@@ -20,11 +20,11 @@ read -p " "
 #BIN=junod
 
 sudo -v
-echo -e "\n\e[32m Ссылку на снапшот можно взять на сайте \e[33m https://polkachu.com/tendermint_snapshots/${NAME}\e[0m"
-echo -e "\n\e[33m  ⚠️   Перейдите на сайт, найдите снапшот!\e[0m"
-echo -e "\e[32m Правый клик на файле для загрузки и там выбрать\e[33m \"Копировать адрес ссылки\"\e[0m"
+echo -e "\n\e[92m Ссылку на снапшот можно взять на сайте \e[33m https://polkachu.com/tendermint_snapshots/${NAME}\e[0m"
+echo -e "\n\e[93m  ⚠️   Перейдите на сайт, найдите снапшот!\e[0m"
+echo -e "\e[92m Правый клик на файле для загрузки и там выбрать\e[33m \"Копировать адрес ссылки\"\e[0m"
 read -p "Вставьте сюда ссылку на снапшот: " SNAP_LINK
-echo -e "\n\e[33m Для продолжения нажмите любую клавишу \e[0m"
+echo -e "\n\e[93m Для продолжения нажмите любую клавишу \e[0m"
 read -p ""
 
 wget -O ${NAME}_latest.tar.lz4 $SNAP_LINK --inet4-only
