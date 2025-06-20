@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/bashMore actions
 
 # Removing the previous script 
 rm -rf snapshot_install.sh
@@ -15,11 +15,11 @@ show_logo() {
 show_logo
 
 
-echo -e "\n\e[37m  ------------------------------------------------------\e[0m"
-echo -e "\e[93m        This script cleans the node and reinstalls\n           the network database from >
+echo -e "\e[37m  ------------------------------------------------------\e[0m"
+echo -e "\e[93m       This script cleans the node and reinstalls\n          the network database from a snapshot!\e[0m"
 echo -e "\e[37m  ------------------------------------------------------\n\e[0m"
 
-echo -e "\n\e[1;93m                     --- Settings ---\e[0m"
+echo -e "\n\e[1;93m               --- Settings ---\e[0m"
 
 echo -e "\n\e[7;97mWhat is your network's name? (e.g., sentinel, stargaze, etc...)\n\e[0m"
 read -p "Enter the network name: " NAME
@@ -68,7 +68,7 @@ wget -O ${NAME}_latest.tar.lz4 $SNAP_LINK --inet4-only
 
 if [ $? -ne 0 ]; then
     echo -e "\n\e[91m ERROR: Failed to download the snapshot!\e[0m"
-    echo -e "\e[93m Please check the links correctness and your internet connection.\e[0m"
+    echo -e "\e[93m Please check the link's correctness and your internet connection.\e[0m"
     echo -e "\e[93m Aborting script execution.\e[0m"
     exit 1
 fi
