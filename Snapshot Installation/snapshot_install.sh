@@ -3,7 +3,7 @@ clear
 
 show_logo() {
     echo -e "\e[92m"
-    curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo1.txt
+    curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.txt
     echo -e "\e[0m"
 }
 
