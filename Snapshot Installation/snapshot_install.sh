@@ -27,6 +27,6 @@ while true; do
       ;;
   esac
 done
-wget -O snapshot_install_${LANG}.sh https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/in_progress/snapshot_install_${LANG}.sh
+wget -O snapshot_install_${LANG}.sh https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/Snapshot%20Installation/snapshot_install_${LANG}.sh
 echo "Downloaded snapshot_install_${LANG}.sh "
 bash snapshot_install_${LANG}.sh
