@@ -68,7 +68,7 @@ wget -O ${NAME}_latest.tar.lz4 $SNAP_LINK --inet4-only
 
 if [ $? -ne 0 ]; then
     echo -e "\n\e[91m ERROR: Failed to download the snapshot!\e[0m"
-    echo -e "\e[93m Please check the link\'\s correctness and your internet connection.\e[0m"
+    echo -e "\e[93m Please check the links correctness and your internet connection.\e[0m"
     echo -e "\e[93m Aborting script execution.\e[0m"
     exit 1
 fi
