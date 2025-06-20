@@ -51,9 +51,9 @@ show_logo
 
 echo -e "\n\e[93m             --- Getting the snapshot ---\e[0m"
 echo -e "\n\e[7;97m You need to provide a link to download snapshot\e[0m"
-echo -e "\n\e[93m  ⚠️    Go to the website: \e[97m https://polkachu.com/tendermint_snapshots/${NAME}\e[0m"
-echo -e "\e[93m        Find the snapshot!\e[0m"
-echo -e "\e[93m Right-click on the download link for the file and select\e[37m \"Copy Link Address\"\n\e[0m"
+echo -e "\n\e[93m          Go to the website: \e[97m https://polkachu.com/tendermint_snapshots/${NAME}\e[0m"
+echo -e "\e[93m     ⚠️   Find the snapshot!\e[0m"
+echo -e "\e[93m          Right-click on the download link for the file and select\e[37m \"Copy Link Address\"\n\e[0m"
 read -p "Paste the snapshot link: " SNAP_LINK
 echo -e "\n\e[92m Press any key to continue \e[0m"
 read -p ""
