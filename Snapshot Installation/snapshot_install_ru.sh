@@ -15,9 +15,9 @@ show_logo() {
 show_logo
 
 
-echo -e "\n\e[37m  -----------------------------------------------------------------------------------------\e[0m"
-echo -e "\e[93m    Этот скрипт производит очистку ноды и переустанавливает базу данных сети из снапшота!\e[0m"
-echo -e "\e[37m  -----------------------------------------------------------------------------------------\n\e[0m"
+echo -e "\e[37m -----------------------------------------------------------\e[0m"
+echo -e "\e[93m            Этот скрипт производит очистку ноды\n      и переустанавливает базу данных сети из снапшота!\e[0m"
+echo -e "\e[37m -----------------------------------------------------------\n\e[0m"
 
 echo -e "\n\e[93m                                --- Настройки ---\e[0m"
 
@@ -85,7 +85,6 @@ echo -e "\n\e[93m Возможно потребуется пароль SUDO \n\e
 
 sudo -v
 
-wget -O ${NAME}_latest.tar.lz4 $SNAP_LINK --inet4-only
 sudo systemctl stop ${NAME}.service
 cp $HOME/.$DIR/data/priv_validator_state.json $HOME/.$DIR/priv_validator_state.json.backup
 $BIN tendermint unsafe-reset-all --home $HOME/.$DIR --keep-addr-book
