@@ -6,10 +6,10 @@ rm -rf snapshot_install.sh
 # Clear the screen and get logo
 clear
 
-logo=$(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
-
 show_logo() {
-	bash -c "$logo"
+    echo -e "\e[92m"
+    curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.txt
+    echo -e "\e[0m"
 }
 
 show_logo
