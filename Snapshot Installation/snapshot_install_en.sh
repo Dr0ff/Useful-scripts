@@ -38,9 +38,9 @@ read -p "Enter the binary name: " BIN
 
 echo -e "\n\e[93m                Settings to be used:\e[0m"
 
-echo -e "\n\e[93m Network Name:\e[1;97m ${NAME}\e[0m"
+echo -e "\n\e[93m Network Name:\e[1;97m    ${NAME}\e[0m"
 echo -e "\e[93m Node Directory:\e[1;97m ${DIR}\e[0m"
-echo -e "\e[93m DAEMON Name:\e[97m ${BIN}\e[0m"
+echo -e "\e[93m DAEMON Name:\e[97m     ${BIN}\e[0m"
 
 echo -e "\n\e[92m Press any key to continue\e[0m"
 echo -e "\e[91m Or CTRL+C to interrupt the process\e[0m"
