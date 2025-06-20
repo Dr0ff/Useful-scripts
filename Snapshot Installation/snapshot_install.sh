@@ -13,6 +13,7 @@ show_logo
 # --- 1. Выбор языка ---
 while true; do
   echo -e "${COLOR_INFO}Please choose your language / Пожалуйста, выберите язык:${RESET}"
+  echo " "
   echo -e " 1. 🇬🇧 English"
   echo -e " 2. 🇷🇺 Русский"
   read -p " " lang_num_choice
