@@ -14,8 +14,8 @@ show_logo
 while true; do
   echo -e "\n\e[7;97mPlease choose your language / Пожалуйста, выберите язык:\e[0m"
   echo " "
-  echo -e " 1. 🇬🇧 English"
-  echo -e " 2. 🇷🇺 Русский"
+  echo -e "           1. 🇬🇧 English          2. 🇷🇺 Русский"
+ # echo -e " 2. 🇷🇺 Русский"
   read -p " " lang_num_choice
 
   case "$lang_num_choice" in
