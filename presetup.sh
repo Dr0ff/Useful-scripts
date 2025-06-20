@@ -1,6 +1,14 @@
 #!/bin/bash
 
-bash <(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
+clear
+
+show_logo() {
+    echo -e "\e[92m"
+    curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.txt
+    echo -e "\e[0m"
+}
+
+show_logo
 
 # Prompt the user to enter the configuration directory
 read -p "Enter the CONFIG_DIR (e.g., .juno or .xpla): " CONFIG_DIR
