@@ -21,8 +21,8 @@ while true; do
     1) LANG="en"; break ;;
     2) LANG="ru"; break ;;
     *)
-      echo -e "\n\e[91m     Please enter 1 or 2    |    Введите 1 или 2. \e[0m"
-    # echo "Неверный ввод. Введите 1 или 2.\e[0m"
+      echo -e "\n\e[91m     Please enter 1 or 2."
+      echo "Неверный ввод. Введите 1 или 2.\e[0m"
       sleep 2
       ;;
   esac
