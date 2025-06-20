@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Removing the previous script 
+rm -rf snapshot_install.sh
+
+# Clear the screen and get logo
 clear
 
 logo=$(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
