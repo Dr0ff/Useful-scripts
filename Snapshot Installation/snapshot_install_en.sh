@@ -81,7 +81,6 @@ echo -e "\n\e[93m SUDO password may be required \n\e[0m"
 
 sudo -v
 
-wget -O ${NAME}_latest.tar.lz4 $SNAP_LINK --inet4-only
 sudo systemctl stop ${NAME}.service
 cp $HOME/$DIR/data/priv_validator_state.json $HOME/$DIR/priv_validator_state.json.backup
 $BIN tendermint unsafe-reset-all --home $HOME/$DIR --keep-addr-book
