@@ -15,9 +15,9 @@ show_logo() {
 show_logo
 
 
-echo -e "\n\e[37m  ------------------------------------------------------------------------------------------\e[0m"
-echo -e "\e[93m       This script cleans the node and reinstalls\n the network database from a snapshot!\e[0m"
-echo -e "\e[37m  ------------------------------------------------------------------------------------------\n\e[0m"
+echo -e "\n\e[37m  ------------------------------------------------------\e[0m"
+echo -e "\e[93m       This script cleans the node and reinstalls\n      the network database from a snapshot!\e[0m"
+echo -e "\e[37m  ------------------------------------------------------\n\e[0m"
 
 echo -e "\n\e[1;93m                 --- Settings ---\e[0m"
 
@@ -55,7 +55,7 @@ show_logo
 
 echo -e "\n\e[93m             --- Getting the snapshot ---\e[0m"
 echo -e "\n\e[7;97m You need to provide a link to download snapshot\e[0m"
-echo -e "\n\e[93m          Go to the website: \e[97m https://polkachu.com/tendermint_snapshots/${NAME}\e[0m"
+echo -e "\n\e[93m          Go to the website: \e[97m https://polkachu.com/tendermint_snapshots /${NAME}\e[0m"
 echo -e "\e[93m     ⚠️   Find the snapshot!\e[0m"
 echo -e "\e[93m          Right-click on the download link for the file and select\e[37m \"Copy Link Address\"\n\e[0m"
 read -p "Paste the snapshot link: " SNAP_LINK
