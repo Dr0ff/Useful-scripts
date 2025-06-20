@@ -7,7 +7,7 @@ Scpript to help easy clean/setup your nodes's database with snapshot</br>
 Run following comand in your node's server terminal: </br>
 Запустите в терминале команду:
 ```
-wget -O snapshot_install.sh wget -O https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/Snapshot%20Installation/snapshot_install.sh
+wget -O snapshot_install.sh https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/Snapshot%20Installation/snapshot_install.sh
 bash snapshot_install.sh
 ```
 
