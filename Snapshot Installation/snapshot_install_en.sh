@@ -15,11 +15,11 @@ show_logo() {
 show_logo
 
 
-echo -e "\e[37m  ------------------------------------------------------\e[0m"
-echo -e "\e[93m       This script cleans the node and reinstalls\n          the network database from a snapshot!\e[0m"
+echo -e "\n\e[37m  ------------------------------------------------------\e[0m"
+echo -e "\e[93m        This script cleans the node and reinstalls\n           the network database from >
 echo -e "\e[37m  ------------------------------------------------------\n\e[0m"
 
-echo -e "\n\e[1;93m               --- Settings ---\e[0m"
+echo -e "\n\e[1;93m                     --- Settings ---\e[0m"
 
 echo -e "\n\e[7;97mWhat is your network's name? (e.g., sentinel, stargaze, etc...)\n\e[0m"
 read -p "Enter the network name: " NAME
