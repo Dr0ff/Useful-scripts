@@ -1,5 +1,14 @@
 #!/bin/bash
 # Version: 1.0.12
+clear
+
+show_logo() {
+    echo -e "\e[92m"
+    curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.txt
+    echo -e "\e[0m"
+}
+
+show_logo
 
 # Function to display error and exit
 error_exit() {
@@ -7,7 +16,6 @@ error_exit() {
   exit 1
 }
 
-bash <(curl -s https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/tt.logo.sh)
 
 
 echo -e "\e[33m"
