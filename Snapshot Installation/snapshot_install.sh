@@ -12,17 +12,16 @@ show_logo
 
 # --- 1. Выбор языка ---
 while true; do
-  echo -e "\n\e[7;97mPlease choose your language   /   Пожалуйста, выберите язык:\e[0m"
+  echo -e "\n\e[7;97mPlease choose your language   |   Пожалуйста, выберите язык:\e[0m"
   echo " "
-  echo -e "           1. 🇬🇧 English          2. 🇷🇺 Русский"
- # echo -e " 2. 🇷🇺 Русский"
+  echo -e "         1. 🇬🇧 English               2. 🇷🇺 Русский"
   read -p " " lang_num_choice
 
   case "$lang_num_choice" in
     1) LANG="en"; break ;;
     2) LANG="ru"; break ;;
     *)
-      echo -e "\n\e[91m     Please enter 1 or 2    /    Введите 1 или 2. \e[0m"
+      echo -e "\n\e[91m     Please enter 1 or 2    |    Введите 1 или 2. \e[0m"
     # echo "Неверный ввод. Введите 1 или 2.\e[0m"
       sleep 2
       ;;
