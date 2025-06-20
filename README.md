@@ -14,11 +14,7 @@ bash snapshot_install.sh
 
 # StateSync your nodes!
 Scpripts to help easy clean/setup your nodes's database using StateSync
-## Juno
-Run following comand in your node's server terminal
-```
-curl https://raw.githubusercontent.com/Dr0ff/Useful-scripts/refs/heads/main/juno_stat_sync.sh | bash
-```
+
 ## Sommelier
 Run following comand in your node's server terminal
 ```
