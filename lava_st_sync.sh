@@ -1,6 +1,6 @@
 #!/bin/bash
 sudo systemctl stop lava.service
-SNAP_RPC="https://lava-mainnet-rpc.itrocket.net:443"
+SNAP_RPC="https://rpc.cosmos.directory:443/nolus"
 BACK_TO_BLOCKS=2000
 echo -e "\e[33mRPC NODE:\e[32m $SNAP_RPC\e[0m"
 echo -e "\e[33mBack to blocks:\e[32m $BACK_TO_BLOCKS\e[0m"
