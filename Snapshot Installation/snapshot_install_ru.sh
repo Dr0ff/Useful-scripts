@@ -86,11 +86,11 @@ echo -e "\n\e[93m Возможно потребуется пароль SUDO \n\e
 sudo -v
 
 sudo systemctl stop ${NAME}.service
-cp $HOME/.$DIR/data/priv_validator_state.json $HOME/.$DIR/priv_validator_state.json.backup
-$BIN tendermint unsafe-reset-all --home $HOME/.$DIR --keep-addr-book
+cp $HOME/$DIR/data/priv_validator_state.json $HOME/$DIR/priv_validator_state.json.backup
+$BIN tendermint unsafe-reset-all --home $HOME/$DIR --keep-addr-book
 rm -rf ~/$DIR/wasm
-lz4 -c -d ${NAME}_latest.tar.lz4  | tar -x -C $HOME/.$DIR
-mv $HOME/.$DIR/priv_validator_state.json.backup $HOME/.$DIR/data/priv_validator_state.json
+lz4 -c -d ${NAME}_latest.tar.lz4  | tar -x -C $HOME/$DIR
+mv $HOME/$DIR/priv_validator_state.json.backup $HOME/$DIR/data/priv_validator_state.json
 sudo systemctl start ${NAME}.service
 rm -v ${NAME}_latest.tar.lz4
 sudo journalctl -u $NAME -f --output cat
